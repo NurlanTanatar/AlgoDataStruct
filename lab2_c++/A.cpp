@@ -1,69 +1,48 @@
 #include <iostream>
 #include <string>
+#include <map>
+#include <set>
 using namespace std;
 
-class Node {
-    public:
-    string data;
-    Node *next;
-
-    // Node(int data) {
-    //     this->data = data;
-    //     this->next = NULL;
-    //     this->prev = NULL;
-    // }
-    Node(string x):data(x), next(NULL){}
-};
-
-class LL {
-    private:
-        Node *head, *tail;
-        void _print(){
-            while( head != NULL){
-                cout << head->data << " ";
-                head = head->next;
-            }
-        }
-    public:
-        LL(){
-            head, tail = NULL;
-        }
-
-        void add(string x){
-            Node *newNode = new Node(x);
-            if(head == NULL){
-                head = tail = newNode;
-            } else {
-                tail->next = newNode;
-                tail = newNode;
-            }
-        }
-        void print(){
-            _print();
-        }
-
-        int count(string key)
+string rm_space(string str)
 {
-            if(head == NULL)
-                return 0;
-                
-            int frequency = count(key);
-
-            if(head->data == key)
-                return 1 + frequency;
-            return frequency;
+    string word = "";
+    for (auto x : str) 
+    {
+        if (x == ' ')
+        {
+            return word;
+            word = "";
         }
+        else {
+            word = word + x;
+        }
+    }
+    return word;
+}
 
+struct comp
+{   
+    template<typename T>
+    bool operator()(T &l, T &r)
+    {
+        if (l.second != r.second) {
+            return l.second > r.second;
+        }
+ 
+        return l.first > r.first;
+    }
 };
 
 int main(){
-    LL *l = new LL();
-    string hell = "hello";
-    for(int i = 0; i < 10; ++i){
-        l->add(hell + to_string(i));
+    map<string, int> m;
+    string s;
+    while(cin >> s) {
+        m[rm_space(s)]++;
     }
-    int counted = l->count(hell);
-    cout << counted  << endl;
 
+    set<pair <string, int>, comp> set(m.begin(), m.end());
+
+    for (auto &pair:  set) cout << pair.first << " " << pair.second << endl;
     return 0;
 }
