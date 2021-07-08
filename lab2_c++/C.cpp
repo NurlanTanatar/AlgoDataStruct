@@ -12,7 +12,9 @@ class Node {
     //     this->next = NULL;
     //     this->prev = NULL;
     // }
-    Node(string x):data(x), next(NULL){}
+    Node(string x):data(x), next(NULL){
+        freq = 1;
+    }
 };
 bool comp (string x, string y) {return x<y;}; 
 class LL {
